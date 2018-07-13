@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="enquiry_issue" language="groovy" pageWidth="597" pageHeight="842" columnWidth="569" leftMargin="8" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.2100000000000006"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="96"/>
+	<property name="ireport.background.image" value="C:\purchase\Enquiry Format.jpg"/>
+	<property name="ireport.background.image.properties" value="false,true,0.25,0,0,0,0,0,0"/>
+	<parameter name="enq_no" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\purchase\\backup\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT a.enq_no,DATE_FORMAT(a.enq_date,'%d-%m-%Y') AS enq_date,DATE_FORMAT(a.open_date,'%d-%m-%Y') AS open_date,b.sr_no,b.description,b.qty,b.unit,d.vendor_name,TRIM(BOTH '"' FROM address) AS address,d.pin,e.hod_desig,e.address1,e.address2,e.pin FROM enq_master a,enq_details b,enquiry_vendor c,vendor d,dept_master e WHERE a.enq_no=$P{enq_no} AND a.enq_no=b.enq_no AND a.enq_no=c.enq_no AND c.vendor_code=d.sr_no  GROUP BY d.vendor_name AND a.dept_code=e.dept_code]]>
+	</queryString>
+	<field name="enq_no" class="java.lang.String"/>
+	<field name="enq_date" class="java.lang.String"/>
+	<field name="open_date" class="java.lang.String"/>
+	<field name="sr_no" class="java.lang.String"/>
+	<field name="description" class="java.lang.String"/>
+	<field name="qty" class="java.lang.Double"/>
+	<field name="unit" class="java.lang.String"/>
+	<field name="vendor_name" class="java.lang.String"/>
+	<field name="address" class="java.lang.String"/>
+	<field name="pin" class="java.lang.String"/>
+	<field name="hod_desig" class="java.lang.String"/>
+	<field name="address1" class="java.lang.String"/>
+	<field name="address2" class="java.lang.String"/>
+	<pageHeader>
+		<band height="88">
+			<textField>
+				<reportElement x="2" y="0" width="238" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{hod_desig}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="2" y="17" width="194" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{address1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1" y="31" width="194" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{address2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="3" y="45" width="100" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{pin}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="220" y="0" width="345" height="88"/>
+				<imageExpression><![CDATA["D:\\github\\enquiry\\src\\title.jpg"]]></imageExpression>
+			</image>
+			<line>
+				<reportElement x="220" y="0" width="1" height="88"/>
+			</line>
+			<line>
+				<reportElement x="0" y="17" width="221" height="1"/>
+			</line>
+			<line>
+				<reportElement x="-1" y="31" width="221" height="1"/>
+			</line>
+			<line>
+				<reportElement x="-1" y="46" width="221" height="1"/>
+			</line>
+			<line>
+				<reportElement x="0" y="63" width="221" height="1"/>
+			</line>
+			<line>
+				<reportElement x="-1" y="87" width="221" height="1"/>
+			</line>
+			<line>
+				<reportElement x="1" y="0" width="219" height="1"/>
+			</line>
+			<line>
+				<reportElement x="324" y="0" width="241" height="1"/>
+			</line>
+			<line>
+				<reportElement x="563" y="0" width="1" height="88"/>
+			</line>
+			<line>
+				<reportElement x="220" y="0" width="104" height="1"/>
+			</line>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="378" splitType="Stretch">
+			<textField>
+				<reportElement x="13" y="13" width="170" height="15"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Enquiry No-"+$F{enq_no}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="14" y="57" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{address}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="13" y="70" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{pin}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="449" y="14" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA["Date-"+$F{enq_date}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="272" y="124" width="70" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{open_date}]]></textFieldExpression>
+			</textField>
+			<elementGroup>
+				<textField>
+					<reportElement x="15" y="43" width="100" height="20"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$F{vendor_name}]]></textFieldExpression>
+				</textField>
+			</elementGroup>
+			<subreport>
+				<reportElement x="12" y="161" width="539" height="215"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="enq_no">
+					<subreportParameterExpression><![CDATA[$P{enq_no}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "enquiry_issue_subreport.jasper"]]></subreportExpression>
+			</subreport>
+			<break>
+				<reportElement x="0" y="292" width="100" height="1"/>
+			</break>
+			<staticText>
+				<reportElement x="240" y="0" width="70" height="20"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ENQUIRY]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="15" y="31" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[TO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="13" y="114" width="555" height="20"/>
+				<textElement/>
+				<text><![CDATA[Quotation in sealed cover superscribing name of bidder, Enquiry Number and Due Date is invited for supply of the following]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="13" y="99" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Dear Sir,]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="13" y="124" width="257" height="20"/>
+				<textElement/>
+				<text><![CDATA[materials. The last date of submission of quotation is on ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="344" y="124" width="218" height="20"/>
+				<textElement/>
+				<text><![CDATA[, upto 11 AM and the tender will be opened on]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="12" y="134" width="537" height="27"/>
+				<textElement/>
+				<text><![CDATA[ the same day after 12 Noon]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="247">
+			<staticText>
+				<reportElement x="1" y="0" width="565" height="13"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[1.Quotation should be prepared on the Company Letter Head/Pad with full communication address,Telephone Nos, Email, Contact person ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="540" y="0" width="43" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[details etc]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="13" width="565" height="13"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[2.The Quotation should be submitted to the office of the DGM (Stores, Purchase & Contract), Technical Building as per above instruction,]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="24" width="549" height="14"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[, failing which the same ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="38" width="561" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[3.Tenderer may be present at the time of opening of quotaion to observe the opening only.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="53" width="563" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[4.Validity of offer must be 120 days from the date of opening same]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="68" width="581" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[5. Price must be F.O.R – DPL Stores (P.P) basis. Note : Please see other terms & Conditions at overleaf also,]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="84" width="362" height="20"/>
+				<textElement>
+					<font size="8" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[  N.B: Following parameters must beconfirmed in the in the quotation ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="96" width="563" height="18"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[1. Whether quoted price is firm]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="105" width="563" height="18"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[2. Delivery period]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="115" width="563" height="18"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[3. Packing & Forwarding charges, if any.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="126" width="563" height="18"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[4. Whether GST in freight in inclusive, if not, specify the GST percentage sperately on GTA, service Basis]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="139" width="566" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[5. Following Documents are to be submitted:- a)GST registration certificate .b) Professional Tax Clearance Certificate ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="150" width="501" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[(if not submitted earlier) c) Appropriate Guarantee should be furnished in offer.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="159" width="501" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[6. Whether sample has been submitted, if any, for which item.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="170" width="501" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[7. Brand/Country of origin of goods is to be mentioned clearly in the offer]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="179" width="501" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[8. Whether Stores offered are in deviation from our specification, if deviated, then specify the same.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="190" width="501" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[9. Terms of payment: Our acceptable  normal payment term is 100% against GRN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="199" width="501" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[10. Mode of delivery of consignment]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="210" width="501" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[11. Please mention the rate on landed cost basis i.e Basic Price +(P&F, GST+Frieght & Insurance as applicable)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="219" width="501" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[12. Valid dealership certificate / Authorization letter should be submitted along with the offer, if applicable]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+</jasperReport>

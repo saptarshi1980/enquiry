@@ -1,0 +1,75 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans     
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/mvc 
+        http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context.xsd">
+    
+    <bean id="ds" class="org.springframework.jdbc.datasource.DriverManagerDataSource">  
+	<property name="driverClassName" value="com.mysql.jdbc.Driver" />  
+	<property name="url" value="jdbc:mysql://172.16.0.53/enquiry" />  
+	<property name="username" value="remote" />  
+	<property name="password" value="dgppro1961" />  
+	</bean>  
+  
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">  
+	<property name="dataSource" ref="ds"></property>  
+	
+	</bean> 
+	<bean id="edao" class="in.net.dpl.dao.EnquiryDAO">  
+	<property name="jdbcTemplate" ref="jdbcTemplate"></property>  
+	</bean>
+	
+	<bean id="vdao" class="in.net.dpl.dao.VendorDAO">  
+	<property name="jdbcTemplate" ref="jdbcTemplate"></property>  
+	</bean>
+	
+	<bean id="tdao" class="in.net.dpl.dao.TenderDAO">  
+	<property name="jdbcTemplate" ref="jdbcTemplate"></property>  
+	</bean>
+	
+	<bean id="udao" class="in.net.dpl.dao.UserDAO">  
+	<property name="jdbcTemplate" ref="jdbcTemplate"></property>  
+	</bean>
+	
+	<bean id="pdao" class="in.net.dpl.dao.PaymentRequestDAO">  
+	<property name="jdbcTemplate" ref="jdbcTemplate"></property>  
+	</bean>
+	  
+	
+	<bean id="tariffdao" class="in.net.dpl.dao.TariffDAO">  
+	<property name="jdbcTemplate" ref="jdbcTemplate"></property>  
+	</bean>
+	
+	<bean id="rcptdao" class="in.net.dpl.dao.RcptDAO">  
+	<property name="jdbcTemplate" ref="jdbcTemplate"></property>  
+	</bean>
+	
+	<bean id="rptdao" class="in.net.dpl.dao.ReportDAO">  
+	<property name="jdbcTemplate" ref="jdbcTemplate"></property>  
+	</bean>
+	
+	<bean id="unique" class="in.net.dpl.model.Unique">  
+	  
+	</bean>
+	
+	<bean id="checksum" class="in.net.dpl.utility.ChecksumBillDesk">  
+	  
+	</bean>
+	
+	<bean id="conn" class="in.net.dpl.utility.ConnDB">  
+	  
+	</bean>
+	
+	
+	
+	<bean id="bdao" class="in.net.dpl.dao.BillDAO">  
+	  <property name="jdbcTemplate" ref="jdbcTemplate"></property>  
+	</bean>
+
+</beans>

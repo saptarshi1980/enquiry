@@ -1,0 +1,16 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Invalid Password</title>
+</head>
+<body>
+
+<div align="center"><img src="images/logo_dpl.jpg" /></div><br><br>
+Invalid Existing Password provided, Password was not changed. <br><br>
+<a href="index.dpl">Click here to Log in</a>
+
+</body>
+</html>
