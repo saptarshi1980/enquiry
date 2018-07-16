@@ -54,11 +54,13 @@
 </div>
 <div id='cssmenu'>
 <ul>
-   <li class='active'><a href='index.dpl'><span>Home</span></a></li>
+   <li class='active'><a href='home.dpl'><span>Home</span></a></li>
+   <li class='active'><a href='SearchVendorPage.dpl' target="_blank"><span>Search Vendor Code</span></a></li>
+   <li class='active'><a href='AddVendorPage.dpl' target="_blank"><span>Add Vendor</span></a></li>
    <li class='has-sub'><a href='#'><span>Enquiry Entry</span></a>
       <ul>
          <li><a href='new_enquiry_entry.dpl'><span>New Enquiry Entry</span></a></li>
-         <li><a href='#'><span>Edit Existing Enquiry</span></a></li>
+         <li><a href='editEnqPage.dpl'><span>Edit Existing Enquiry</span></a></li>
          
       </ul>
    </li>
@@ -66,11 +68,12 @@
       <ul>
          
          <li class='last'><a href='selectEnq.dpl'><span>Enquiry Print</span></a></li>
-         <li><a href='#'><span>Enqury MIS</span></a></li>
+         <li><a href='listAllEnq.dpl'><span>All Enquiry List</span></a></li>
          <li class='last'><a href='#'><span>Contact</span></a></li>
       </ul>
    </li>
-   <li class='last'><a href='#'><span>Contact</span></a></li>
+   <li class='last'><a href='reset.dpl'><span>Change Password</span></a></li>
+   <li class='last'><a href='logout.dpl'><span>Logout</span></a></li>
 </ul>
 </div>
 

@@ -92,6 +92,14 @@ public class NavigationController{
 		return model;
 	}
 	
+	@RequestMapping(value="/editEnqPage.dpl",method = RequestMethod.GET)
+	public ModelAndView editEnqpage(HttpServletRequest request){
+ 
+		
+		ModelAndView model = new ModelAndView("selectEnqForEdit"); 
+		return model;
+	}
+	
 	
 	@RequestMapping(value="/new_enquiry_entry.dpl",method = RequestMethod.GET)
 	public ModelAndView newEnquiryEntry(HttpServletRequest request){
@@ -101,27 +109,54 @@ public class NavigationController{
 		return model;
 	}
 	
+	
+	@RequestMapping(value="/enquiryEdit.dpl",method = RequestMethod.GET)
+	public ModelAndView enquiryEdit(HttpServletRequest request){
+ 
+		//request.getSession().invalidate();
+		ModelAndView model = new ModelAndView("selectEnqForEdit"); 
+		return model;
+	}
+	
+	@RequestMapping(value="/AddVendorToEnq.dpl",method = RequestMethod.GET)
+	public ModelAndView AddVendortoenquiry(HttpServletRequest request){
+ 
+		//request.getSession().invalidate();
+		ModelAndView model = new ModelAndView("selectEnqForVendorAdd"); 
+		return model;
+	}
+	
+	@RequestMapping(value="/DelVendorFromEnq.dpl",method = RequestMethod.GET)
+	public ModelAndView delVendortoenquiry(HttpServletRequest request){
+ 
+		//request.getSession().invalidate();
+		ModelAndView model = new ModelAndView("selectEnqForVendorDel"); 
+		return model;
+	}
+	
+	
 	@RequestMapping(value="/enq_basic.dpl",method = RequestMethod.POST)
 	public ModelAndView home(@RequestParam("enq_no") String enq_no,@RequestParam("enq_date") String enq_date,@RequestParam("open_date") String open_date,HttpServletRequest request){
  
 		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("spring.xml");
 		EnquiryDAO edao=(EnquiryDAO) ctx.getBean("edao");
     	String deptCode=request.getSession().getAttribute("dept_code").toString();
+    	String enqSrNo=null;
 		
 		
 		try{
-		edao.saveEnquiryMaster(enq_no.toUpperCase(),enq_date,open_date,deptCode);
+			enqSrNo=edao.saveEnquiryMaster(enq_no.toUpperCase(),enq_date,open_date,deptCode);
 		}catch(DataAccessException ex){
 			ex.printStackTrace();
 		}
     	EnquiryModel em=new EnquiryModel();
-    	em.setEnqRefNo(enq_no);
+    	em.setEnqRefNo(enqSrNo);
     	em.setEnqDate(enq_date);
     	em.setOpeningDate(open_date);
     	ModelAndView model	 = new ModelAndView("enq_details");
-		model.addObject("enq_no",enq_no);
+		model.addObject("enq_no",enqSrNo);
 		model.addObject("enq_date",enq_date);
-		model.addObject("open_date",enq_no);
+		model.addObject("open_date",open_date);
 		return model;
 	}
 	
@@ -185,6 +220,60 @@ public class NavigationController{
 		
 		
 		return model;
+	}
+	
+	@RequestMapping(value="/SaveVendorExistingEnq.dpl",method = RequestMethod.POST)
+	public ModelAndView saveVendorExistingEnq(@RequestParam("enq_no") String enq_no,@RequestParam("vendor_code") String vendor_code,HttpServletRequest request){
+ 
+		System.out.println("Inside save vendor existing Enq");
+		
+		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("spring.xml");
+		
+		ModelAndView model	 = new ModelAndView("addVendorToExisingEndSuccess");
+
+    	
+    	VendorDAO vdao=(VendorDAO) ctx.getBean("vdao");
+    	
+		
+		try{
+		vdao.saveVendor(vendor_code, enq_no);
+		}catch(DataAccessException ex){
+			ex.printStackTrace();
+		}
+		
+		
+		return model;
+		
+		
+		
+		
+	}
+	
+	@RequestMapping(value="/VendorExistingEndDel.dpl",method = RequestMethod.POST)
+	public ModelAndView delVendorExistingEnq(@RequestParam("enq_no") String enq_no,@RequestParam("vendor_code") String vendor_code,HttpServletRequest request){
+ 
+		
+		
+		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("spring.xml");
+		
+		ModelAndView model	 = new ModelAndView("addVendorToExisingEndSuccess");
+
+    	
+    	VendorDAO vdao=(VendorDAO) ctx.getBean("vdao");
+    	
+		
+		try{
+		vdao.delVendor(vendor_code, enq_no);
+		}catch(DataAccessException ex){
+			ex.printStackTrace();
+		}
+		
+		
+		return model;
+		
+		
+		
+		
 	}
 	
 	@RequestMapping(value="/FindVendor.dpl",method = RequestMethod.GET)
@@ -313,6 +402,22 @@ public class NavigationController{
 		return model;
 	}
 	
+	@RequestMapping(value="/listAllEnq.dpl",method = RequestMethod.GET)
+	public ModelAndView listAllEnq(HttpServletRequest request){
+ 
+		String deptCode=String.valueOf(request.getSession().getAttribute("dept_code"));
+		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("spring.xml");
+		EnquiryDAO edao=(EnquiryDAO) ctx.getBean("edao");
+		List<EnquiryModel> ltm=new ArrayList<EnquiryModel>();
+		ltm=edao.enquiryListAll(deptCode);
+		System.out.println(ltm.size());
+		
+		
+		ModelAndView model = new ModelAndView("EnqListAll"); 
+		model.addObject("enq", ltm);
+		return model;
+	}
+	
 	
 	@RequestMapping(value="/passwordReset.dpl",method = RequestMethod.GET)
 	public ModelAndView passwordReset(@RequestParam("username") String user_id,@RequestParam("password")String password,@RequestParam("newpassword") String newpassword,HttpServletRequest request){
@@ -389,6 +494,93 @@ public class NavigationController{
 		return model;
 		
 		
+	}
+	
+	@RequestMapping(value="/listEnqEdit.dpl",method = RequestMethod.POST)
+	public ModelAndView listEnquiry(@RequestParam("enq_no") String enq_no,HttpServletRequest request){
+ 
+		String deptCode=String.valueOf(request.getSession().getAttribute("dept_code"));
+		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("spring.xml");
+		EnquiryDAO edao=(EnquiryDAO) ctx.getBean("edao");
+		List<EnquiryModel> ltm=new ArrayList<EnquiryModel>();
+		ltm=edao.enquiryListByNumber(enq_no, deptCode);
+		System.out.println(ltm.size());
+		
+		
+		ModelAndView model = new ModelAndView("enqDisplayEdit"); 
+		model.addObject("enq", ltm);
+		return model;
+	}
+	
+	@RequestMapping(value="/listEnqVendorAdd.dpl",method = RequestMethod.POST)
+	public ModelAndView listEnquiryVendorAdd(@RequestParam("enq_no") String enq_no,HttpServletRequest request){
+ 
+		String deptCode=String.valueOf(request.getSession().getAttribute("dept_code"));
+		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("spring.xml");
+		EnquiryDAO edao=(EnquiryDAO) ctx.getBean("edao");
+		List<Vendor> ltm=new ArrayList<Vendor>();
+		ltm=edao.enquiryListVendor(enq_no, deptCode);
+		System.out.println(ltm.size());		
+		
+		ModelAndView model = new ModelAndView("enqDisplayVendorAdd"); 
+		model.addObject("enq", ltm);
+		model.addObject("no", enq_no);
+		
+		return model;
+	}
+	
+	
+	@RequestMapping(value="/EditEnq.dpl",method = RequestMethod.POST)
+	public ModelAndView enquiryEdit(@RequestParam("sr_no") String sr_no,String desc,String qty,String unit,@RequestParam("enq_no") String enq_no,HttpServletRequest request){
+ 
+		String deptCode=String.valueOf(request.getSession().getAttribute("dept_code"));
+		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("spring.xml");
+		EnquiryDAO edao=(EnquiryDAO) ctx.getBean("edao");
+		List<EnquiryModel> ltm=new ArrayList<EnquiryModel>();
+		//int index=sr_no.indexOf("-");
+		//String enqNo=sr_no.substring(0,index);
+		//String srNo=sr_no.substring(index+1,sr_no.length());
+		edao.editEnquiryDetails(enq_no, sr_no, desc, unit, qty);
+		ModelAndView model = new ModelAndView("selectEnqForEdit"); 
+		return model;
+	}
+	
+	
+	@RequestMapping(value="/EditEnqPage.dpl",method = RequestMethod.GET)
+	public ModelAndView enquiryEditFinal(@RequestParam("sr_no") String sr_no,HttpServletRequest request){
+ 
+		
+		String deptCode=String.valueOf(request.getSession().getAttribute("dept_code"));
+		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("spring.xml");
+		EnquiryDAO edao=(EnquiryDAO) ctx.getBean("edao");
+		List<EnquiryModel> ltm=new ArrayList<EnquiryModel>();
+		int index=sr_no.indexOf("-");
+		String enqNo=sr_no.substring(0,index);
+		String srNo=sr_no.substring(index+1,sr_no.length());
+		ltm=edao.enquiryByNumber(enqNo, srNo);
+		ModelAndView model = new ModelAndView("enqEditFinal"); 
+		model.addObject("enq", ltm);
+		return model;
+	}
+	
+	
+	
+	
+	@RequestMapping(value="/listEnqVendorDel.dpl",method = RequestMethod.POST)
+	public ModelAndView listEnquiryVendorDel(@RequestParam("enq_no") String enq_no,HttpServletRequest request){
+ 
+		String deptCode=String.valueOf(request.getSession().getAttribute("dept_code"));
+		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("spring.xml");
+		EnquiryDAO edao=(EnquiryDAO) ctx.getBean("edao");
+		List<Vendor> ltm=new ArrayList<Vendor>();
+		ltm=edao.enquiryListVendor(enq_no, deptCode);
+		System.out.println(ltm.size());		
+		
+		ModelAndView model = new ModelAndView("enqDisplayVendorDel"); 
+		model.addObject("enq", ltm);
+		model.addObject("no", enq_no);
+		
+		return model;
 	}
 	/*@RequestMapping(value="/reset.dpl",method = RequestMethod.GET)
 	public ModelAndView reset(HttpServletRequest request){

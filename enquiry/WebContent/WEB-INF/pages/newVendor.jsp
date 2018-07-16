@@ -20,6 +20,7 @@
   %> 
 <div align="center"><img src="images/logo_dpl.jpg" /></div>
 <p>&nbsp;</p>
+<a href='home.dpl'><span>Home</span></a><br>
 
 <p><br>
 </p>

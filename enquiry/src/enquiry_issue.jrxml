@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="enquiry_issue" language="groovy" pageWidth="597" pageHeight="842" columnWidth="569" leftMargin="8" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.2100000000000006"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="96"/>
+	<property name="ireport.y" value="381"/>
 	<property name="ireport.background.image" value="C:\purchase\Enquiry Format.jpg"/>
 	<property name="ireport.background.image.properties" value="false,true,0.25,0,0,0,0,0,0"/>
 	<parameter name="enq_no" class="java.lang.String">
@@ -12,7 +12,7 @@
 		<defaultValueExpression><![CDATA["C:\\purchase\\backup\\"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[SELECT a.enq_no,DATE_FORMAT(a.enq_date,'%d-%m-%Y') AS enq_date,DATE_FORMAT(a.open_date,'%d-%m-%Y') AS open_date,b.sr_no,b.description,b.qty,b.unit,d.vendor_name,TRIM(BOTH '"' FROM address) AS address,d.pin,e.hod_desig,e.address1,e.address2,e.pin FROM enq_master a,enq_details b,enquiry_vendor c,vendor d,dept_master e WHERE a.enq_no=$P{enq_no} AND a.enq_no=b.enq_no AND a.enq_no=c.enq_no AND c.vendor_code=d.sr_no  GROUP BY d.vendor_name AND a.dept_code=e.dept_code]]>
+		<![CDATA[SELECT a.enq_no,DATE_FORMAT(a.enq_date,'%d-%m-%Y') AS enq_date,DATE_FORMAT(a.open_date,'%d-%m-%Y') AS open_date,b.sr_no,b.description,b.qty,b.unit,d.vendor_name,TRIM(BOTH '"' FROM address) AS address,d.pin,e.hod_desig,e.address1,e.address2,e.pin as hod_pin FROM enq_master a,enq_details b,enquiry_vendor c,vendor d,dept_master e WHERE a.enq_no=$P{enq_no} AND a.enq_no=b.enq_no AND a.enq_no=c.enq_no AND c.vendor_code=d.sr_no AND a.dept_code=e.dept_code GROUP BY d.vendor_name]]>
 	</queryString>
 	<field name="enq_no" class="java.lang.String"/>
 	<field name="enq_date" class="java.lang.String"/>
@@ -27,6 +27,7 @@
 	<field name="hod_desig" class="java.lang.String"/>
 	<field name="address1" class="java.lang.String"/>
 	<field name="address2" class="java.lang.String"/>
+	<field name="hod_pin" class="java.lang.String"/>
 	<pageHeader>
 		<band height="88">
 			<textField>
@@ -37,25 +38,18 @@
 				<textFieldExpression><![CDATA[$F{hod_desig}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="2" y="17" width="194" height="20"/>
+				<reportElement x="2" y="17" width="218" height="20"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{address1}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="1" y="31" width="194" height="20"/>
+				<reportElement x="1" y="31" width="219" height="20"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{address2}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="3" y="45" width="100" height="20"/>
-				<textElement>
-					<font isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{pin}]]></textFieldExpression>
 			</textField>
 			<image>
 				<reportElement x="220" y="0" width="345" height="88"/>
@@ -91,6 +85,16 @@
 			<line>
 				<reportElement x="220" y="0" width="104" height="1"/>
 			</line>
+			<textField>
+				<reportElement x="0" y="45" width="204" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{hod_pin}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="-1" y="-1" width="1" height="88"/>
+			</line>
 		</band>
 	</pageHeader>
 	<detail>
@@ -101,12 +105,12 @@
 				<textFieldExpression><![CDATA["Enquiry No-"+$F{enq_no}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="14" y="57" width="100" height="20"/>
+				<reportElement x="14" y="57" width="226" height="20"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{address}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="13" y="70" width="100" height="20"/>
+				<reportElement x="13" y="70" width="227" height="20"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{pin}]]></textFieldExpression>
 			</textField>
@@ -122,7 +126,7 @@
 			</textField>
 			<elementGroup>
 				<textField>
-					<reportElement x="15" y="43" width="100" height="20"/>
+					<reportElement x="15" y="45" width="225" height="20"/>
 					<textElement/>
 					<textFieldExpression><![CDATA[$F{vendor_name}]]></textFieldExpression>
 				</textField>
@@ -138,9 +142,6 @@
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "enquiry_issue_subreport.jasper"]]></subreportExpression>
 			</subreport>
-			<break>
-				<reportElement x="0" y="292" width="100" height="1"/>
-			</break>
 			<staticText>
 				<reportElement x="240" y="0" width="70" height="20"/>
 				<textElement>

@@ -59,6 +59,12 @@ private JdbcTemplate jdbcTemplate;
 	
 	}
 	
+	public int delVendor(String vendorCode,String enqCode){  
+		String sql = "delete from enquiry_vendor where enq_no='"+enqCode+"' and vendor_code='"+vendorCode+"' ";
+		return jdbcTemplate.update(sql);  		
+	
+	}
+	
 	
 	public List<String> listVendor(String enq_no){  
 		String sql = "select a.vendor_name from vendor a, enquiry_vendor b where b.enq_no='"+enq_no+"' and b.vendor_code=a.sr_no group by vendor_name";

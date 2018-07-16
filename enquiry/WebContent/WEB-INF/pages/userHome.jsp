@@ -36,15 +36,16 @@
    <li class='has-sub'><a href='#'><span>Enquiry Entry</span></a>
       <ul>
          <li><a href='new_enquiry_entry.dpl'><span>New Enquiry Entry</span></a></li>
-         <li><a href='#'><span>Edit Existing Enquiry</span></a></li>
-         
-      </ul>
+         <li><a href='editEnqPage.dpl'><span>Edit Existing Enquiry</span></a></li>
+         <li><a href='AddVendorToEnq.dpl'><span>Add vendor to existing Enquiry</span></a></li>
+         <li><a href='DelVendorFromEnq.dpl'><span>Delete vendor from existing Enquiry</span></a></li>
+       </ul>
    </li>
    <li class='has-sub'><a href='reportEnq.dpl'><span>Report on Enquiry</span></a>
       <ul>
          
          <li class='last'><a href='selectEnq.dpl'><span>Enquiry Print</span></a></li>
-         <li><a href='#'><span>Enqury MIS</span></a></li>
+         <li><a href='listAllEnq.dpl'><span>All Enquiry List</span></a></li>
          <li class='last'><a href='#'><span>Contact</span></a></li>
       </ul>
    </li>

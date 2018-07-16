@@ -7,6 +7,44 @@ public class EnquiryModel {
 	String enqRefNo=null;
 	String openingDate=null;
 	String enqDate=null;
+	String qty=null;
+	String description=null;
+	String unit=null;
+	String srNo=null;
+	String enqSrNo=null;
+	
+	
+	
+	public String getEnqSrNo() {
+		return enqSrNo;
+	}
+	public void setEnqSrNo(String enqSrNo) {
+		this.enqSrNo = enqSrNo;
+	}
+	public String getSrNo() {
+		return srNo;
+	}
+	public void setSrNo(String srNo) {
+		this.srNo = srNo;
+	}
+	public String getQty() {
+		return qty;
+	}
+	public void setQty(String qty) {
+		this.qty = qty;
+	}
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	public String getUnit() {
+		return unit;
+	}
+	public void setUnit(String unit) {
+		this.unit = unit;
+	}
 	public String getEnqRefNo() {
 		return enqRefNo;
 	}

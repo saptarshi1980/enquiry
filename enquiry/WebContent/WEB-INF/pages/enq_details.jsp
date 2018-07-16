@@ -20,6 +20,7 @@
   %> 
 <div align="center"><img src="images/logo_dpl.jpg" /></div>
 <p>&nbsp;</p>
+<a href='home.dpl'><span>Home</span></a><br>
 <table width="892" border="1" align="center">
   <tr>
     <th width="111" scope="row">Enquiry No </th>
